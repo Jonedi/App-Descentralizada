@@ -1,0 +1,19 @@
+// Responsive
+@mixin mq($rel: null, $breakpoint, $breakpoint1: null){
+    @if map-has-key($breakpoints, $breakpoint) and $rel == 'min' {
+        @media (min-width: map-get($breakpoints, $breakpoint)) { @content; }
+    } @else if map-has-key($breakpoints, $breakpoint) and $rel == 'max' {
+        @media (max-width: map-get($breakpoints, $breakpoint)) { @content; }
+    } @else if type-of($breakpoint) == number and unit($breakpoint) == 'px' and $rel == 'min' {
+        @media (min-width: $breakpoint) { @content; }
+    } @else if type-of($breakpoint) == number and unit($breakpoint) == 'px' and $rel == 'max' {
+        @media (max-width: $breakpoint) { @content; }
+    } @else if $rel == null{
+        @media (max-width: $breakpoint) and (min-width: $breakpoint1)  { @content; }
+    } 
+}
+/* Cómo Usarlo
+@media (min-width()){} --> @include mq(min, ) {}
+@media (max-width()){} --> @include mq(max, ) {}
+@media (max-width()) and (min-width()){} --> @include mq(null,n1,n2) {}
+*/
